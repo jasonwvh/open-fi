@@ -6,15 +6,23 @@ build:
   local:
     push: false
   artifacts:
-  - image: jasonwvh/auth
-    context: auth
-    docker:
-      dockerfile: Dockerfile
-    sync:
-      manual:
-        - src: "src/**/*.ts"
-          dest: .
+    - image: jasonwvh/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: jasonwvh/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
 deploy:
   kubectl:
     manifests:
-    - infra/k8s/*
+      - infra/k8s/*
