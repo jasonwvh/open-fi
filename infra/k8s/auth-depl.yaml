@@ -12,15 +12,21 @@ spec:
         app: auth
     spec:
       containers:
-      - name: auth
-        image: jasonwvh/auth
-        imagePullPolicy: Never
-        resources:
-          limits:
-            memory: "256Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 3000
+        - name: auth
+          image: jasonwvh/auth
+          imagePullPolicy: Never
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 3000
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secrets
+                  key: JWT_KEY
 ---
 apiVersion: v1
 kind: Service
@@ -30,7 +36,7 @@ spec:
   selector:
     app: auth
   ports:
-  - name: auth
-    protocol: TCP
-    port: 3000
-    targetPort: 3000
+    - name: auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

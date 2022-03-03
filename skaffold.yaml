@@ -5,11 +5,14 @@ metadata:
 build:
   local:
     push: false
+    useBuildkit: true
   artifacts:
     - image: jasonwvh/auth
       context: auth
       docker:
         dockerfile: Dockerfile
+        buildArgs:
+          NPM_TOKEN: "{{.NPM_TOKEN}}"
       sync:
         manual:
           - src: "src/**/*.ts"

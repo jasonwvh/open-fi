@@ -1,7 +1,11 @@
 FROM node:alpine
 
+ARG NPM_TOKEN
 WORKDIR /app
-COPY package.json .
+
+COPY .npmrc ./ 
+COPY package.json ./
+
 RUN npm install
 COPY . .
 
