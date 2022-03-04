@@ -1,0 +1,12 @@
+FROM node:alpine
+
+ARG NPM_TOKEN
+WORKDIR /app
+
+COPY .npmrc ./ 
+COPY package.json ./
+
+RUN npm install
+COPY . .
+
+CMD ["npm", "start"]
